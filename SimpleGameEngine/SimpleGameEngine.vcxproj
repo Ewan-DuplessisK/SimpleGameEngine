@@ -71,7 +71,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)External\SDL2-2.28.5\include;$(SolutionDir)External\SDL2_image-2.6.3\include;$(SolutionDir)External\glew-2.1.0\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)External\SDL2-2.28.5\include;$(SolutionDir)External\SDL2_image-2.6.3\include;$(SolutionDir)External\glew-2.1.0\include;$(SolutionDir)External\rapidjson\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)External\SDL2-2.28.5\lib\x64;$(SolutionDir)External\SDL2_image-2.6.3\lib\x64;$(SolutionDir)External\glew-2.1.0\lib\Release\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -135,13 +135,11 @@
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="AnimSpriteComponent.cpp" />
     <ClCompile Include="Assets.cpp" />
-    <ClCompile Include="Astroid.cpp" />
-    <ClCompile Include="BackgroundSpriteComponent.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CircleCollisionComponent.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="InputComponent.cpp" />
-    <ClCompile Include="Laser.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Matrix4.cpp" />
@@ -152,9 +150,7 @@
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="RendererOGL.cpp" />
-    <ClCompile Include="RendererSDL.cpp" />
     <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="Ship.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -167,14 +163,12 @@
     <ClInclude Include="Actor.h" />
     <ClInclude Include="AnimSpriteComponent.h" />
     <ClInclude Include="Assets.h" />
-    <ClInclude Include="Astroid.h" />
-    <ClInclude Include="BackgroundSpriteComponent.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="CircleCollisionComponent.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="IRenderer.h" />
-    <ClInclude Include="Laser.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="Maths.h" />
     <ClInclude Include="Matrix4.h" />
@@ -185,9 +179,7 @@
     <ClInclude Include="Random.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="RendererOGL.h" />
-    <ClInclude Include="RendererSDL.h" />
     <ClInclude Include="Shader.h" />
-    <ClInclude Include="Ship.h" />
     <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Timer.h" />
@@ -199,6 +191,8 @@
   <ItemGroup>
     <None Include="Res\Shaders\Basic.frag" />
     <None Include="Res\Shaders\Basic.vert" />
+    <None Include="Res\Shaders\BasicMesh.frag" />
+    <None Include="Res\Shaders\BasicMesh.vert" />
     <None Include="Res\Shaders\Sprite.frag" />
     <None Include="Res\Shaders\Sprite.vert" />
     <None Include="Res\Shaders\Transform.vert" />

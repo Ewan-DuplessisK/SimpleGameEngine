@@ -1,12 +1,8 @@
 #include "Game.h"
 #include "Actor.h"
-#include "SpriteComponent.h"
-#include "AnimSpriteComponent.h"
 #include "Timer.h"
 #include "Assets.h"
-#include "BackgroundSpriteComponent.h"
-#include "Astroid.h"
-#include "Ship.h"
+#include "MeshComponent.h"
 
 bool Game::initialize()
 {
@@ -17,12 +13,37 @@ bool Game::initialize()
 
 void Game::load()
 {
-	Assets::loadTexture(renderer, "Res\\Textures\\HealthBar.png", "HealthBar");
 	Assets::loadShader("Res\\Shaders\\Sprite.vert", "Res\\Shaders\\Sprite.frag", "", "", "", "Sprite");
+	Assets::loadShader("Res\\Shaders\\BasicMesh.vert", "Res\\Shaders\\BasicMesh.frag", "", "", "", "BasicMesh");
 
-	Actor* ui = new Actor();
-	ui->setPosition(Vector3(-350.0f, -350.0f, 0.0f));
-	SpriteComponent* sc = new SpriteComponent(ui, Assets::getTexture("HealthBar"));
+	Assets::loadTexture(renderer, "Res\\Default.png", "Default");
+	Assets::loadTexture(renderer, "Res\\Cube.png", "Cube");
+	Assets::loadTexture(renderer, "Res\\HealthBar.png", "HealthBar");
+	Assets::loadTexture(renderer, "Res\\Plane.png", "Plane");
+	Assets::loadTexture(renderer, "Res\\Radar.png", "Radar");
+	Assets::loadTexture(renderer, "Res\\Sphere.png", "Sphere");
+
+	Assets::loadMesh("Res\\Meshes\\Cube.gpmesh", "Mesh_Cube");
+	Assets::loadMesh("Res\\Meshes\\Plane.gpmesh", "Mesh_Plane");
+	Assets::loadMesh("Res\\Meshes\\Sphere.gpmesh", "Mesh_Sphere");
+
+	camera = new Camera();
+
+	Actor* a = new Actor();
+	a->setPosition(Vector3(200.0f, 105.0f, 0.0f));
+	a->setScale(100.0f);
+	Quaternion q(Vector3::unitY, -Maths::piOver2);
+	q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::pi + Maths::pi / 4.0f));
+	a->setRotation(q);
+	MeshComponent* mc = new MeshComponent(a);
+	mc->setMesh(Assets::getMesh("Mesh_Cube"));
+
+	Actor* b = new Actor();
+	b->setPosition(Vector3(200.0f, -75.0f, 0.0f));
+	b->setScale(3.0f);
+	MeshComponent* mcb = new MeshComponent(b);
+	mcb->setMesh(Assets::getMesh("Mesh_Sphere"));
+
 }
 
 void Game::processInput()
@@ -58,14 +79,14 @@ void Game::update(float dt)
 {
 	// Update actors 
 	isUpdatingActors = true;
-	for(auto actor: actors) 
+	for (auto actor : actors)
 	{
 		actor->update(dt);
 	}
 	isUpdatingActors = false;
 
 	// Move pending actors to actors
-	for (auto pendingActor: pendingActors)
+	for (auto pendingActor : pendingActors)
 	{
 		pendingActor->computeWorldTransform();
 		actors.emplace_back(pendingActor);
@@ -92,25 +113,6 @@ void Game::render()
 	renderer.beginDraw();
 	renderer.draw();
 	renderer.endDraw();
-}
-
-vector<Astroid*>& Game::getAstroids()
-{
-	return astroids;
-}
-
-void Game::addAstroid(Astroid* astroid)
-{
-	astroids.emplace_back(astroid);
-}
-
-void Game::removeAstroid(Astroid* astroid)
-{
-	auto iter = std::find(begin(astroids), end(astroids), astroid);
-	if (iter != astroids.end())
-	{
-		astroids.erase(iter);
-	}
 }
 
 void Game::loop()
