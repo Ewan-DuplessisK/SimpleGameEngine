@@ -135,6 +135,7 @@
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="AnimSpriteComponent.cpp" />
     <ClCompile Include="Assets.cpp" />
+    <ClCompile Include="BackgroundSpriteComponent.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CircleCollisionComponent.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -166,11 +167,12 @@
     <ClInclude Include="Actor.h" />
     <ClInclude Include="AnimSpriteComponent.h" />
     <ClInclude Include="Assets.h" />
+    <ClInclude Include="BackgroundSpriteComponent.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CircleCollisionComponent.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Cube.h" />
-    <ClInclude Include="DirectionnalLight.h" />
+    <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="IRenderer.h" />
@@ -200,6 +202,8 @@
     <None Include="Res\Shaders\Basic.vert" />
     <None Include="Res\Shaders\BasicMesh.frag" />
     <None Include="Res\Shaders\BasicMesh.vert" />
+    <None Include="Res\Shaders\Phong.frag" />
+    <None Include="Res\Shaders\Phong.vert" />
     <None Include="Res\Shaders\Sprite.frag" />
     <None Include="Res\Shaders\Sprite.vert" />
     <None Include="Res\Shaders\Transform.vert" />

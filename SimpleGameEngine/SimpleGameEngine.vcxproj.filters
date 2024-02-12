@@ -102,6 +102,9 @@
     <ClCompile Include="Plane.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="BackgroundSpriteComponent.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Log.h">
@@ -194,7 +197,10 @@
     <ClInclude Include="Plane.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="DirectionnalLight.h">
+    <ClInclude Include="DirectionalLight.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="BackgroundSpriteComponent.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
@@ -218,6 +224,12 @@
       <Filter>Fichiers de ressources</Filter>
     </None>
     <None Include="Res\Shaders\BasicMesh.frag">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="Res\Shaders\Phong.vert">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="Res\Shaders\Phong.frag">
       <Filter>Fichiers de ressources</Filter>
     </None>
   </ItemGroup>
