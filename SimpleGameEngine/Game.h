@@ -5,7 +5,7 @@
 #include "Window.h"
 #include "Vector2.h"
 #include "RendererOGL.h"
-#include "Camera.h"
+//#include "AudioSystem.h"
 #include "InputSystem.h"
 
 using std::vector;
@@ -25,7 +25,7 @@ public:
 	Game& operator=(Game&&) = delete;
 
 private:
-	Game() : isRunning(true), isUpdatingActors(false), camera(nullptr) {}
+	Game() : isRunning(true), isUpdatingActors(false), fps(nullptr), crosshair(nullptr), follow(nullptr),orbit(nullptr),path(nullptr) {}
 
 public:
 	bool initialize();
@@ -37,6 +37,8 @@ public:
 	void addActor(Actor* actor);
 	void removeActor(Actor* actor);
 	RendererOGL& getRenderer() { return renderer; }
+	//AudioSystem& getAudioSystem() { return audioSystem; }
+
 
 private:
 	void processInput();
@@ -46,11 +48,20 @@ private:
 	bool isRunning;
 	Window window;
 	RendererOGL renderer;
+	//AudioSystem audioSystem;
+	InputSystem inputSystem;
 
 	bool isUpdatingActors;
 	vector<Actor*> actors;
 	vector<Actor*> pendingActors;
-	Camera* camera;
-	InputSystem inputSystem;
-};
 
+	// Game specific
+	void changeCamera(int mode);
+
+	//SoundEvent musicEvent;
+	class FPSActor* fps;
+	class SpriteComponent* crosshair;
+	class FollowActor* follow;
+	class OrbitActor* orbit;
+	class SplineActor* path;
+};
