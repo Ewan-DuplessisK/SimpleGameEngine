@@ -14,7 +14,7 @@ Component::~Component()
 	owner.removeComponent(this);
 }
 
-void Component::processInput(const struct InputState& inputState)
+void Component::processInput(const InputState& inputState)
 {
 }
 

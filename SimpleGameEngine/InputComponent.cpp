@@ -1,6 +1,6 @@
 #include "InputComponent.h"
-#include <SDL_scancode.h>
 #include "InputSystem.h"
+#include <SDL_scancode.h>
 
 InputComponent::InputComponent(Actor* ownerP) :
 	MoveComponent(ownerP),
@@ -13,10 +13,10 @@ InputComponent::InputComponent(Actor* ownerP) :
 {
 }
 
-void InputComponent::processInput(const struct InputState& inputState)
+void InputComponent::processInput(const InputState& inputState)
 {
 	float forwardSpeed = 0.0f;
-	if (inputState.keyboard.getKeyState(forwardKey)==ButtonState::Held)
+	if (inputState.keyboard.getKeyState(forwardKey) == ButtonState::Held)
 	{
 		forwardSpeed += maxForwardSpeed;
 	}

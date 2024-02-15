@@ -2,7 +2,7 @@
 #include "Component.h"
 #include "Texture.h"
 
-class SpriteComponent : public Component
+class SpriteComponent :	public Component
 {
 public:
 	SpriteComponent(Actor* ownerP, Texture& textureP, int drawOrderP = 100); // Lower draw order: further back
@@ -28,3 +28,4 @@ protected:
 	int texHeight;
 	bool isVisible;
 };
+

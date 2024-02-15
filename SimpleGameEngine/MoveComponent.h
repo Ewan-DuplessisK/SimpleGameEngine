@@ -24,3 +24,4 @@ private:
 	float angularSpeed;
 	float strafeSpeed;
 };
+

@@ -13,3 +13,4 @@ private:
 	class FollowCameraComponent* cameraComponent;
 	class MeshComponent* meshComponent;
 };
+
