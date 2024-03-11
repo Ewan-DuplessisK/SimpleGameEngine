@@ -13,16 +13,19 @@
 #include "SplineActor.h"
 #include "TargetActor.h"
 #include <algorithm>
-#include <algorithm>
+#include "Warship.h"
+#include "ScrollScreenActor.h"
+#include "Random.h"
 
 bool Game::initialize()
 {
 	bool isWindowInit = window.initialize();
 	bool isRendererInit = renderer.initialize(window);
-	//bool isAudioInit = audioSystem.initialize();
+	bool isAudioInit = audioSystem.initialize();
 	bool isInputInit = inputSystem.initialize();
+	Random::init();
 
-	return isWindowInit && isRendererInit /* && isAudioInit*/ && isInputInit; // Return bool && bool && bool ...to detect error
+	return isWindowInit && isRendererInit && isAudioInit && isInputInit; // Return bool && bool && bool ...to detect error
 }
 
 void Game::load()
@@ -51,9 +54,23 @@ void Game::load()
 	Assets::loadMesh("Res\\Meshes\\RacingCar.gpmesh", "Mesh_RacingCar");
 	Assets::loadMesh("Res\\Meshes\\Target.gpmesh", "Mesh_Target");
 
-	fps = new FPSActor();
+	//fps = new FPSActor();
+	//follow = new FollowActor();
+	scroll = new ScrollScreenActor();
+	vector<Warship*> warships = {};
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 3; j++) {
+			Warship* a = new Warship();
+			a->setPosition(Vector3(1000.0f*i + Random::getFloatRange(-100.0f, 100.0f), 600.0f * j - 600.0f+Random::getFloatRange(-100.0f,100.0f), -100.0f));
+			a->setScale(100.0f);
+			//Quaternion q(Vector3::unitY, -Maths::piOver2);
+			//q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::pi + Maths::pi / 4.0f));
+			//a->setRotation(q);
+			warships.push_back(a);
+		}
+	}
 
-	CubeActor* a = new CubeActor();
+	/*CubeActor* a = new CubeActor();
 	a->setPosition(Vector3(200.0f, 105.0f, 0.0f));
 	a->setScale(100.0f);
 	Quaternion q(Vector3::unitY, -Maths::piOver2);
@@ -62,14 +79,14 @@ void Game::load()
 
 	SphereActor* b = new SphereActor();
 	b->setPosition(Vector3(200.0f, -75.0f, 0.0f));
-	b->setScale(3.0f);
+	b->setScale(3.0f);*/
 
 	// Floor and walls
 
 	// Setup floor
 	const float start = -1250.0f;
 	const float size = 250.0f;
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		for (int j = 0; j < 10; j++)
 		{
@@ -79,7 +96,7 @@ void Game::load()
 	}
 
 	// Left/right walls
-	q = Quaternion(Vector3::unitX, Maths::piOver2);
+	/*q = Quaternion(Vector3::unitX, Maths::piOver2);
 	for (int i = 0; i < 10; i++)
 	{
 		PlaneActor* p = new PlaneActor();
@@ -102,7 +119,7 @@ void Game::load()
 		p = new PlaneActor();
 		p->setPosition(Vector3(-start + size, start + i * size, 0.0f));
 		p->setRotation(q);
-	}
+	}*/
 
 	// Setup lights
 	renderer.setAmbientLight(Vector3(0.2f, 0.2f, 0.2f));
@@ -112,28 +129,28 @@ void Game::load()
 	dir.specColor = Vector3(0.8f, 0.8f, 0.8f);
 
 	// Create spheres with audio components playing different sounds
-	/*SphereActor* soundSphere = new SphereActor();
+	SphereActor* soundSphere = new SphereActor();
 	soundSphere->setPosition(Vector3(500.0f, -75.0f, 0.0f));
 	soundSphere->setScale(1.0f);
 	AudioComponent* ac = new AudioComponent(soundSphere);
-	ac->playEvent("event:/FireLoop");*/
+	ac->playEvent("event:/FireLoop");
 
 	// Corsshair
-	Actor* crosshairActor = new Actor();
+	/*Actor* crosshairActor = new Actor();
 	crosshairActor->setScale(2.0f);
-	crosshair = new SpriteComponent(crosshairActor, Assets::getTexture("Crosshair"));
+	crosshair = new SpriteComponent(crosshairActor, Assets::getTexture("Crosshair"));*/
 
 	// Start music
-	//musicEvent = audioSystem.playEvent("event:/Music");
+	musicEvent = audioSystem.playEvent("event:/Music");
 
-	TargetActor* t = new TargetActor();
+	/*TargetActor* t = new TargetActor();
 	t->setPosition(Vector3(1450.0f, 0.0f, 100.0f));
 	t = new TargetActor();
 	t->setPosition(Vector3(1450.0f, 0.0f, 400.0f));
 	t = new TargetActor();
 	t->setPosition(Vector3(1450.0f, -500.0f, 200.0f));
 	t = new TargetActor();
-	t->setPosition(Vector3(1450.0f, 500.0f, 200.0f));
+	t->setPosition(Vector3(1450.0f, 500.0f, 200.0f));*/
 }
 
 void Game::processInput()
@@ -168,7 +185,7 @@ void Game::processInput()
 void Game::update(float dt)
 {
 	// Update audio
-	//audioSystem.update(dt);
+	audioSystem.update(dt);
 
 	// Update actors 
 	isUpdatingActors = true;
@@ -239,7 +256,7 @@ void Game::close()
 {
 	inputSystem.close();
 	renderer.close();
-	//audioSystem.close();
+	audioSystem.close();
 	window.close();
 	SDL_Quit();
 }

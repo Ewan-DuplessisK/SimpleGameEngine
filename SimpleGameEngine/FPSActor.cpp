@@ -14,18 +14,18 @@
 FPSActor::FPSActor() : 
 	Actor(), 
 	moveComponent(nullptr), 
-	//audioComponent(nullptr), 
+	audioComponent(nullptr), 
 	meshComponent(nullptr),
 	cameraComponent(nullptr),
-	//lastFootstep(0.0f),
+	lastFootstep(0.0f),
 	boxComponent(nullptr)
 {
 	moveComponent = new MoveComponent(this);
-	//audioComponent = new AudioComponent(this);
+	audioComponent = new AudioComponent(this);
 	cameraComponent = new FPSCameraComponent(this);
 
-	//footstep = audioComponent->playEvent("event:/Footstep");
-	//footstep.setPaused(true);
+	footstep = audioComponent->playEvent("event:/Footstep");
+	footstep.setPaused(true);
 
 	FPSModel = new Actor();
 	FPSModel->setScale(0.75f);
@@ -43,13 +43,13 @@ void FPSActor::updateActor(float dt)
 	Actor::updateActor(dt);
 
 	// Play the footstep if we're moving and haven't recently
-	/*lastFootstep -= dt;
+	lastFootstep -= dt;
 	if (!Maths::nearZero(moveComponent->getForwardSpeed()) && lastFootstep <= 0.0f)
 	{
 		footstep.setPaused(false);
 		footstep.restart();
 		lastFootstep = 0.5f;
-	}*/
+	}
 
 	// Update position and rotation of model relatively to position
 	Vector3 modelPosition = getPosition();
@@ -134,16 +134,16 @@ void FPSActor::shoot()
 	// Rotate the ball to face new direction
 	ball->rotateToNewForward(dir);
 	// Play shooting sound
-	//audioComponent->playEvent("event:/Shot");
+	audioComponent->playEvent("event:/Shot");
 }
 
-/*void FPSActor::setFootstepSurface(float value)
+void FPSActor::setFootstepSurface(float value)
 {
 	// Pause here because the way I setup the parameter in FMOD
 	// changing it will play a footstep
 	footstep.setPaused(true);
 	footstep.setParameter("Surface", value);
-}*/
+}
 
 void FPSActor::setVisible(bool isVisible)
 {

@@ -5,7 +5,7 @@
 #include "Window.h"
 #include "Vector2.h"
 #include "RendererOGL.h"
-//#include "AudioSystem.h"
+#include "AudioSystem.h"
 #include "InputSystem.h"
 #include "PhysicsSystem.h"
 #include "PlaneActor.h"
@@ -27,7 +27,7 @@ public:
 	Game& operator=(Game&&) = delete;
 
 private:
-	Game() : isRunning(true), isUpdatingActors(false), fps(nullptr), crosshair(nullptr) {}
+	Game() : isRunning(true), isUpdatingActors(false), scroll(nullptr), crosshair(nullptr) {}
 
 public:
 	bool initialize();
@@ -39,7 +39,7 @@ public:
 	void addActor(Actor* actor);
 	void removeActor(Actor* actor);
 	RendererOGL& getRenderer() { return renderer; }
-	//AudioSystem& getAudioSystem() { return audioSystem; }
+	AudioSystem& getAudioSystem() { return audioSystem; }
 	PhysicsSystem& getPhysicsSystem() { return physicsSystem; }
 
 	// Game-specific
@@ -56,7 +56,7 @@ private:
 	bool isRunning;
 	Window window;
 	RendererOGL renderer;
-	//AudioSystem audioSystem;
+	AudioSystem audioSystem;
 	InputSystem inputSystem;
 	PhysicsSystem physicsSystem;
 
@@ -65,8 +65,10 @@ private:
 	vector<Actor*> pendingActors;
 
 	// Game specific
-	//SoundEvent musicEvent;
-	class FPSActor* fps;
+	SoundEvent musicEvent;
+	//class FPSActor* fps;
+	//class FollowActor* follow;
+	class ScrollScreenActor* scroll;
 	class SpriteComponent* crosshair;
 	vector<PlaneActor*> planes;
 };
